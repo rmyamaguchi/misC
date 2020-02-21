@@ -46,14 +46,14 @@ void testShapes(void)
     Shapes[1] = &Quadrado;
 
     Circulo.self();
-    PRINT(% d, Circulo.area());
-    PRINT(% d, Circulo.perimeter());
+    PRINT(%d, Circulo.area());
+    PRINT(%d, Circulo.perimeter());
     printf("\r\n");
     Quadrado.self();
-    PRINT(% d, Quadrado.area());
-    PRINT(% d, Quadrado.perimeter());
+    PRINT(%d, Quadrado.area());
+    PRINT(%d, Quadrado.perimeter());
     printf("\r\n");
-    PRINT(% d, getTotalArea(Shapes, 2));
+    PRINT(%d, getTotalArea(Shapes, 2));
     printf("\r\n");
-    PRINT(% d, getTotalAreaPlus(Shapes, 2));
+    PRINT(%d, getTotalAreaPlus(Shapes, 2));
 }

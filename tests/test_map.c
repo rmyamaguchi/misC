@@ -26,9 +26,9 @@ void testMap(void)
     map1.put("aaa", &i_aaa);
     map1.put("str", s_str);
 
-    PRINT(% d, *(int *)map1.val("foo"));
-    PRINT(% d, *(int *)map1.val("bar"));
-    PRINT(% d, *(int *)map1.val("aaa"));
-    PRINT(% s, (char *)map1.val("str"));
+    PRINT(%d, *(int *)map1.val("foo"));
+    PRINT(%d, *(int *)map1.val("bar"));
+    PRINT(%d, *(int *)map1.val("aaa"));
+    PRINT(%s, (char *)map1.val("str"));
     printf("\r\n");
 }

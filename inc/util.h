@@ -32,10 +32,11 @@
  ************************************************************************************/
 
 /******************************************
- * @brief Does something need to be said?
+ * @brief Some classics
  */
 #define MIN(a, b) a > b ? b : a
 #define MAX(a, b) a < b ? b : a
+#define UNREF_PAR(x) (x) = (x)
 
 /******************************************
  * @brief Macro overloading.
@@ -156,6 +157,8 @@
  * TYPEDEFS
  ************************************************************************************/
 typedef void *OBJ;
+
+typedef unsigned char byte;
 
 typedef union VOID_P {
     void *void_;
