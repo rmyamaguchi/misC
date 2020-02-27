@@ -13,8 +13,16 @@
 
 #include "util.h"
 
-#define PRN_IMG_MAXBUFF 160000
-#define PRN_IMG_MAX24BUFF (3 * PRN_IMG_MAXBUFF)
+#define IMG_MAXBUF 160000
+#define IMG_MAX24BUF (3 * IMG_MAXBUF)
+
+enum BGRA
+{
+    BLUE,
+    GREEN,
+    RED,
+    ALPHA
+};
 
 typedef struct __attribute__((__packed__)) // 54 bytes
 {
@@ -38,7 +46,7 @@ typedef struct __attribute__((__packed__)) // 54 bytes
 
 typedef union {
     BMPHeader Header;
-    byte data[PRN_IMG_MAX24BUFF];
+    byte data[IMG_MAX24BUF];
 } BMP;
 
 /**
@@ -50,5 +58,8 @@ typedef union {
  * @return int 0: Success
  */
 extern int BMPto24bpp(const byte *bmp_in, byte *bmp_out);
+
+/* Tests */
+extern void testBmp(void);
 
 #endif /* BMP_H */

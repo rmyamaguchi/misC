@@ -12,14 +12,15 @@
 #include "util.h"
 #include "Map.h"
 #include "Shapes.h"
+#include "bmp.h"
 
-#define NUM_TESTS 2
+#define NUM_TESTS 3
 
-void (*gv_tests[NUM_TESTS])(void) = {testMap, testShapes};
+void (*gv_tests[NUM_TESTS])(void) = {testMap, testShapes, testBmp};
 
 int main(void)
 {
-    unsigned int opt = 1;
+    unsigned int opt = 2;
 
     if (opt >= NUM_TESTS)
         return 1;
