@@ -79,7 +79,17 @@
  * @brief Macro to print a variable name and its value.
  */
 #define VAL(var) #var, (var)
-#define PRINT(format, var) PRINT_F("\r\n" __FILE__ ":%d >> %s: " #format, __LINE__, VAL(var))
+#define PRINT(format, var) PRINT_F("\r\n" __FILE__ ":%d >> %s: " format, __LINE__, VAL(var))
+
+/******************************************
+ * @brief Macro to test if things worked (0 => OK)
+ */
+#define ASSERT(x)             \
+    if (x)                    \
+    {                         \
+        PRINT("ERROR %d", x); \
+        exit(EXIT_FAILURE);   \
+    }
 
 /******************************************
  * @brief Macros to assist in declaring objects.
