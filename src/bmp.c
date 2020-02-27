@@ -11,6 +11,8 @@
 
 #include "bmp.h"
 
+static byte gBackground[] = {0xff, 0xff, 0xff}; /* white */
+
 /**
  * @brief Computes the Lowest Multiple of a Power of 2 Greater than or Equal to (x)
  * 
@@ -32,7 +34,7 @@ static unsigned int LMp2GE(unsigned int p2, unsigned int x)
  * @param[in] img_width in bytes
  * @return unsigned int 
  */
-static unsigned int getNumPads(size_t img_width)
+static unsigned int numPads(size_t img_width)
 {
     unsigned int ret;
     ret = LMp2GE(4, img_width);
@@ -42,8 +44,39 @@ static unsigned int getNumPads(size_t img_width)
 }
 
 /**
- * @brief Let us try converting BMPs to 24 bpp.
- * @note Currently supporting only 8 bpp
+ * @brief Get the pixel in a BMP 8bpp and transforms it into a 24bpp one
+ * 
+ * @param[in] rd_px Pointer to byte[1] read
+ * @param[out] wr_px Pointer to byte[3] written
+ * @param[in] color_tab Pointer to the beginning of the color table
+ * @return int Number of bytes read = 1
+ */
+static int getPx8b(const byte *rd_px, byte *wr_px, const byte *color_tab)
+{
+    /* Get color in BMP8 color table [*rd_px] (each color is 4 bytes long) */
+    memcpy(wr_px, color_tab + *rd_px * 4, 3);
+    return 1;
+}
+
+/**
+ * @brief Get the pixel in a BMP 32bpp and transforms it into a 24bpp one
+ * 
+ * @param[in] rd_px Pointer to byte[4] read
+ * @param[out] wr_px Pointer to byte[3] written
+ * @param[in] color_bg Pointer to a byte[3] as a BGR color of the background
+ * @return int Number of bytes read = 4 (BGRA)
+ */
+static int getPx32b(const byte *rd_px, byte *wr_px, const byte *color_bg)
+{
+    for (int i = 0; i < 3; i++)
+        /* Weighted average: (1 - alpha) * background + alpha * color */
+        wr_px[i] = ((0xff - rd_px[ALPHA]) * color_bg[i] + rd_px[ALPHA] * rd_px[i]) / 0xff;
+    return 4;
+}
+
+/**
+ * @brief Convert BMPs to 24 bpp.
+ * @note Currently supporting 8 and 32 bpp
  * 
  * @param[in] bmp_in Original BMP buffer
  * @param[out] bmp_out Converted BMP
@@ -55,89 +88,85 @@ static unsigned int getNumPads(size_t img_width)
  */
 int BMPto24bpp(const byte *bmp_in, byte *bmp_out)
 {
-    BMP BMP8, BMP24;
-    byte *read_idx, *write_idx, *color_tab;
-    int read_inline_idx, write_inline_idx;
-    unsigned int read_num_pads, write_num_pads;
-    int i;
+    BMP BMPx, BMP24;
+    byte *rd_idx, *wr_idx, *color_ref = NULL;
+    int px_idx;
+    unsigned int rd_num_pads, wr_num_pads;
+    int (*getPx)(const byte *, byte *, const byte *);
 
     /* Get BMP header first */
-    memcpy(BMP8.data, bmp_in, sizeof(BMPHeader));
+    memcpy(BMPx.data, bmp_in, sizeof(BMPHeader));
 
     /* Check BMP header */
-    if (BMP8.Header.type != 0x4d42)
+    if (BMPx.Header.type != 0x4d42)
         return 1;
     /* Check size of file */
-    if (BMP8.Header.size > PRN_IMG_MAXBUFF)
+    if (BMPx.Header.size > IMG_MAXBUF)
         return 2;
     /* Check bpp field */
-    if (BMP8.Header.bits_per_pixel != 8)
+    switch (BMPx.Header.bits_per_pixel)
     {
-        memcpy(bmp_out, bmp_in, BMP8.Header.size);
-        if (BMP8.Header.bits_per_pixel == 24)
-            return 0;
-        else
-            return 1;
+    case 8:
+        color_ref = (byte *)((unsigned long)&BMPx.Header.dib_header_size + BMPx.Header.dib_header_size);
+        getPx = getPx8b;
+        break;
+    case 32:
+        color_ref = gBackground;
+        getPx = getPx32b;
+        break;
+    case 24:
+        memcpy(bmp_out, bmp_in, BMPx.Header.size);
+        return 0;
+    default:
+        return 1;
     }
 
-    /* Get the remaining of data */
-    memcpy(BMP8.data, bmp_in, BMP8.Header.size);
+    /* Get remaining data */
+    memcpy(BMPx.data, bmp_in, BMPx.Header.size);
 
     /* Go to beginning of data */
-    read_idx = BMP8.data + BMP8.Header.offset;
-    write_idx = BMP24.data + sizeof(BMPHeader);
-    color_tab = (byte *)((unsigned long)&BMP8.Header.dib_header_size + BMP8.Header.dib_header_size);
-    read_inline_idx = 0;  /* Index of byte in write line */
-    write_inline_idx = 0; /* Index of byte in read line */
+    rd_idx = BMPx.data + BMPx.Header.offset;
+    wr_idx = BMP24.data + sizeof(BMPHeader);
+    /* Index of pixel in img row */
+    px_idx = 0;
 
-    /* Check if padding exists in BMP8 */
-    read_num_pads = getNumPads(BMP8.Header.width_px);
-    /* Check if padding is necessary in BMP24 */
-    write_num_pads = getNumPads(BMP8.Header.width_px * 3);
+    /* Check padding in BMPx */
+    rd_num_pads = numPads(BMPx.Header.bits_per_pixel / 8 * BMPx.Header.width_px);
+    /* Check padding in BMP24 */
+    wr_num_pads = numPads(3 * BMPx.Header.width_px);
 
-    /* 8 bpp -> 24 bpp */
-    while (read_idx < BMP8.data + BMP8.Header.size &&
-           write_idx < BMP24.data + PRN_IMG_MAX24BUFF - 2)
+    while (rd_idx < BMPx.data + BMPx.Header.size &&
+           wr_idx < BMP24.data + IMG_MAX24BUF - 2)
     {
-        /* Skip read_num_pads bytes when end of line */
-        if (write_inline_idx >= BMP8.Header.width_px * 1)
+        rd_idx += getPx(rd_idx, wr_idx, color_ref);
+        wr_idx += 3;
+        if (++px_idx >= BMPx.Header.width_px)
         {
-            for (i = 0; i < read_num_pads; i++)
-                read_idx++;
-            write_inline_idx = 0;
-        }
-        /* Get (4 byte) color in BMP8 color table [*read_idx] */
-        if (read_inline_idx < BMP8.Header.width_px * 3)
-        {
-            memcpy(write_idx, color_tab + *read_idx * 4, 3);
-            read_idx++;
-            write_inline_idx++;
-            write_idx += 3;
-            read_inline_idx += 3;
-        }
-        else /* Writes write_num_pads bytes as 0x00 */
-        {
-            for (i = 0; i < write_num_pads; i++)
-                *(write_idx++) = 0x00;
-            read_inline_idx = 0;
+            /* Skip rd_num_pads bytes when end of img row */
+            rd_idx += rd_num_pads;
+            /* Writes wr_num_pads bytes as 0x00 */
+            memset(wr_idx, 0x00, wr_num_pads);
+            wr_idx += wr_num_pads;
+            /* Begin a new img row */
+            px_idx = 0;
         }
     }
 
     /* Build the new header */
     BMP24.Header.type = 0x4d42;
-    BMP24.Header.size = write_idx - BMP24.data;
+    BMP24.Header.size = wr_idx - BMP24.data;
     BMP24.Header.reserved1 = 0;
     BMP24.Header.reserved2 = 0;
     BMP24.Header.dib_header_size = 40;
     BMP24.Header.offset = sizeof(BMPHeader);
-    BMP24.Header.width_px = BMP8.Header.width_px;
-    BMP24.Header.height_px = BMP8.Header.height_px;
+    BMP24.Header.width_px = BMPx.Header.width_px;
+    BMP24.Header.height_px = BMPx.Header.height_px;
     BMP24.Header.num_planes = 1;
     BMP24.Header.bits_per_pixel = 24;
     BMP24.Header.compression = 0;
     BMP24.Header.image_size_bytes = BMP24.Header.size - BMP24.Header.offset;
-    BMP24.Header.x_resolution_ppm = BMP8.Header.x_resolution_ppm;
-    BMP24.Header.y_resolution_ppm = BMP8.Header.y_resolution_ppm;
+    BMP24.Header.x_resolution_ppm = BMPx.Header.x_resolution_ppm;
+    BMP24.Header.y_resolution_ppm = BMPx.Header.y_resolution_ppm;
     BMP24.Header.num_colors = 0;
     BMP24.Header.important_colors = 0;
 
