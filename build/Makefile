@@ -30,11 +30,11 @@ CLA_SRCS	:= $(notdir $(wildcard $(CLASRC_DIR)/*.c))
 CLA_OBJS    := $(addprefix $(OBJ_DIR)/,$(CLA_SRCS:.c=.o))
 
 # C/C++ Compiler
-CC           = $(BIN_DIR)/x86_64-linux-gnu-gcc
-CCC          = $(BIN_DIR)/x86_64-linux-gnu-g++
-CXX          = $(BIN_DIR)/x86_64-linux-gnu-g++
-AR           = $(BIN_DIR)/x86_64-linux-gnu-ar
-RANLIB       = $(BIN_DIR)/x86_64-linux-gnu-ranlib
+CC           = $(BIN_DIR)/gcc
+CCC          = $(BIN_DIR)/g++
+CXX          = $(BIN_DIR)/g++
+AR           = $(BIN_DIR)/ar
+RANLIB       = $(BIN_DIR)/ranlib
 
 # C Compiler Flags
 CFLAGS 		= -c -Wall -std=c99
