@@ -9,7 +9,8 @@
                 "${workspaceFolder}/build",
                 "${workspaceFolder}/inc",
                 "${workspaceFolder}/libClass/inc",
-                "${workspaceFolder}/libBMP/inc"
+                "${workspaceFolder}/libBMP/inc",
+                "${workspaceFolder}/libPatterns/DigitalStopWatch/inc"
             ],
             "defines": [
                 "_DEBUG_"
