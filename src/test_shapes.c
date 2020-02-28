@@ -23,7 +23,9 @@ int get_total_area(OBJ *Shapes, int len)
 int get_total_area_plus(OBJ *Shapes, int len)
 {
     int total = 0;
-    int five = 5;
+    int five;
+
+    five = 5 + total;
     Circle(Circulo, five);
 
     Circulo.self();
