@@ -10,9 +10,7 @@
  */
 
 #include "util.h"
-#include "Map.h"
-#include "Shapes.h"
-#include "bmp.h"
+#include "tests.h"
 
 #define NUM_TESTS 3
 

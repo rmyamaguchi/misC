@@ -63,7 +63,4 @@ typedef union {
  */
 extern int bmp_to_24bpp(const byte *bmp_in, byte *bmp_out);
 
-/* Tests */
-extern void test_bmp(void);
-
 #endif /* BMP_H */

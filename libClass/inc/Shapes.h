@@ -66,7 +66,4 @@
 
 #define Square(...) VA_SELECT(Square, __VA_ARGS__)
 
-/* Tests */
-extern void test_shapes(void);
-
 #endif /* SHAPES_H */

@@ -56,7 +56,4 @@
 
 #define Map(...) VA_SELECT(Map, __VA_ARGS__)
 
-/* Tests */
-extern void test_map(void);
-
 #endif /* MAP_H */
