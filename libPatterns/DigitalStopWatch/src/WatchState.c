@@ -1,4 +1,4 @@
-
+#include <stdio.h>
 #include "WatchState.h"
 
 static void defaultStop(WatchStatePtr state)
