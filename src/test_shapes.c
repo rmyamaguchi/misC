@@ -12,31 +12,31 @@
 #include "util.h"
 #include "Shapes.h"
 
-int getTotalArea(OBJ *Shapes, int len)
+int get_total_area(OBJ *Shapes, int len)
 {
-    int i_total = 0;
+    int total = 0;
     for (int i = 0; i < len; i++)
-        i_total += Shape(Shapes[i]).area();
-    return i_total;
+        total += Shape(Shapes[i]).area();
+    return total;
 }
 
-int getTotalAreaPlus(OBJ *Shapes, int len)
+int get_total_area_plus(OBJ *Shapes, int len)
 {
-    int i_total = 0;
-    int i_five = 5;
-    Circle(Circulo, i_five);
+    int total = 0;
+    int five = 5;
+    Circle(Circulo, five);
 
     Circulo.self();
     PRINT("%d", Circulo.area());
     PRINT("%d", Circulo.perimeter());
     printf("\r\n");
     for (int i = 0; i < len; i++)
-        i_total += Shape(Shapes[i]).area();
-    i_total += Circulo.area();
-    return i_total;
+        total += Shape(Shapes[i]).area();
+    total += Circulo.area();
+    return total;
 }
 
-void testShapes(void)
+void test_shapes(void)
 {
     Circle(Circulo, 10);
     Square(Quadrado, 10);
@@ -53,7 +53,7 @@ void testShapes(void)
     PRINT("%d", Quadrado.area());
     PRINT("%d", Quadrado.perimeter());
     printf("\r\n");
-    PRINT("%d", getTotalArea(Shapes, 2));
+    PRINT("%d", get_total_area(Shapes, 2));
     printf("\r\n");
-    PRINT("%d", getTotalAreaPlus(Shapes, 2));
+    PRINT("%d", get_total_area_plus(Shapes, 2));
 }

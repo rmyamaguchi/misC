@@ -12,19 +12,19 @@
 #include "util.h"
 #include "Map.h"
 
-void testMap(void)
+void test_map(void)
 {
-    int i_foo = 42;
-    int i_bar = 314;
-    int i_aaa = 11;
-    char s_str[] = "banana";
+    int foo = 42;
+    int bar = 314;
+    int aaa = 11;
+    char str[] = "banana";
     Map(map1, 5);
 
     printf("\r\n");
-    map1.put("foo", &i_foo);
-    map1.put("bar", &i_bar);
-    map1.put("aaa", &i_aaa);
-    map1.put("str", s_str);
+    map1.put("foo", &foo);
+    map1.put("bar", &bar);
+    map1.put("aaa", &aaa);
+    map1.put("str", str);
 
     PRINT("%d", *(int *)map1.val("foo"));
     PRINT("%d", *(int *)map1.val("bar"));

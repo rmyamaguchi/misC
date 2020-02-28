@@ -50,16 +50,20 @@ typedef union {
 } BMP;
 
 /**
- * @brief Let us try converting BMPs to 24 bpp.
+ * @brief Convert BMPs to 24 bpp.
+ * @note Currently supporting 8 and 32 bpp
  * 
  * @param[in] bmp_in Original BMP buffer
  * @param[out] bmp_out Converted BMP
  * 
- * @return int 0: Success
+ * @return int 
+ *  0: Success
+ *  1: Invalid BMP
+ *  2: Too big of a BMP
  */
-extern int BMPto24bpp(const byte *bmp_in, byte *bmp_out);
+extern int bmp_to_24bpp(const byte *bmp_in, byte *bmp_out);
 
 /* Tests */
-extern void testBmp(void);
+extern void test_bmp(void);
 
 #endif /* BMP_H */

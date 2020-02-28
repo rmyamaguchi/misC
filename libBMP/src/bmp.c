@@ -11,7 +11,7 @@
 
 #include "bmp.h"
 
-static byte gBackground[] = {0xff, 0xff, 0xff}; /* white */
+static byte vb_background[] = {0xff, 0xff, 0xff}; /* white */
 
 /**
  * @brief Computes the Lowest Multiple of a Power of 2 Greater than or Equal to (x)
@@ -20,7 +20,7 @@ static byte gBackground[] = {0xff, 0xff, 0xff}; /* white */
  * @param[in] x 
  * @return unsigned int The result. Returns 0 if p2 is not a power of 2.
  */
-static unsigned int LMp2GE(unsigned int p2, unsigned int x)
+static unsigned int lmp2ge(unsigned int p2, unsigned int x)
 {
     /* Checks whether p2 is really a Power of 2 */
     if ((p2 != 0) && ((p2 & (p2 - 1)) == 0)) /* e.g. b1000 & b0111 == 0 */
@@ -34,10 +34,10 @@ static unsigned int LMp2GE(unsigned int p2, unsigned int x)
  * @param[in] img_width in bytes
  * @return unsigned int 
  */
-static unsigned int numPads(size_t img_width)
+static unsigned int num_pads(size_t img_width)
 {
     unsigned int ret;
-    ret = LMp2GE(4, img_width);
+    ret = lmp2ge(4, img_width);
     if (ret)
         ret -= img_width;
     return ret;
@@ -51,7 +51,7 @@ static unsigned int numPads(size_t img_width)
  * @param[in] color_tab Pointer to the beginning of the color table
  * @return int Number of bytes read = 1
  */
-static int getPx8b(const byte *rd_px, byte *wr_px, const byte *color_tab)
+static int get_px8b(const byte *rd_px, byte *wr_px, const byte *color_tab)
 {
     /* Get color in BMP8 color table [*rd_px] (each color is 4 bytes long) */
     memcpy(wr_px, color_tab + *rd_px * 4, 3);
@@ -66,7 +66,7 @@ static int getPx8b(const byte *rd_px, byte *wr_px, const byte *color_tab)
  * @param[in] color_bg Pointer to a byte[3] as a BGR color of the background
  * @return int Number of bytes read = 4 (BGRA)
  */
-static int getPx32b(const byte *rd_px, byte *wr_px, const byte *color_bg)
+static int get_px32b(const byte *rd_px, byte *wr_px, const byte *color_bg)
 {
     for (int i = 0; i < 3; i++)
         /* Weighted average: (1 - alpha) * background + alpha * color */
@@ -86,13 +86,13 @@ static int getPx32b(const byte *rd_px, byte *wr_px, const byte *color_bg)
  *  1: Invalid BMP
  *  2: Too big of a BMP
  */
-int BMPto24bpp(const byte *bmp_in, byte *bmp_out)
+int bmp_to_24bpp(const byte *bmp_in, byte *bmp_out)
 {
     BMP BMPx, BMP24;
     byte *rd_idx, *wr_idx, *color_ref = NULL;
     int px_idx;
     unsigned int rd_num_pads, wr_num_pads;
-    int (*getPx)(const byte *, byte *, const byte *);
+    int (*get_px)(const byte *, byte *, const byte *);
 
     /* Get BMP header first */
     memcpy(BMPx.data, bmp_in, sizeof(BMPHeader));
@@ -108,11 +108,11 @@ int BMPto24bpp(const byte *bmp_in, byte *bmp_out)
     {
     case 8:
         color_ref = (byte *)((unsigned long)&BMPx.Header.dib_header_size + BMPx.Header.dib_header_size);
-        getPx = getPx8b;
+        get_px = get_px8b;
         break;
     case 32:
-        color_ref = gBackground;
-        getPx = getPx32b;
+        color_ref = vb_background;
+        get_px = get_px32b;
         break;
     case 24:
         memcpy(bmp_out, bmp_in, BMPx.Header.size);
@@ -131,14 +131,14 @@ int BMPto24bpp(const byte *bmp_in, byte *bmp_out)
     px_idx = 0;
 
     /* Check padding in BMPx */
-    rd_num_pads = numPads(BMPx.Header.bits_per_pixel / 8 * BMPx.Header.width_px);
+    rd_num_pads = num_pads(BMPx.Header.bits_per_pixel / 8 * BMPx.Header.width_px);
     /* Check padding in BMP24 */
-    wr_num_pads = numPads(3 * BMPx.Header.width_px);
+    wr_num_pads = num_pads(3 * BMPx.Header.width_px);
 
     while (rd_idx < BMPx.data + BMPx.Header.size &&
            wr_idx < BMP24.data + IMG_MAX24BUF - 2)
     {
-        rd_idx += getPx(rd_idx, wr_idx, color_ref);
+        rd_idx += get_px(rd_idx, wr_idx, color_ref);
         wr_idx += 3;
         if (++px_idx >= BMPx.Header.width_px)
         {

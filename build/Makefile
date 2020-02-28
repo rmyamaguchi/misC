@@ -2,7 +2,14 @@
 BIN_DIR     := /usr/bin
 INC_DIR     := ./inc
 SRC_DIR     := ./src
-TST_DIR     := ./tests
+
+BMP_DIR     := ./libBMP
+BMPSRC_DIR	:= $(BMP_DIR)/src
+BMPINC_DIR	:= $(BMP_DIR)/inc
+
+CLA_DIR		:= ./libClass
+CLASRC_DIR	:= $(CLA_DIR)/src
+CLAINC_DIR	:= $(CLA_DIR)/inc
 
 # Commands
 MKDIR        = mkdir
@@ -10,15 +17,17 @@ CP           = cp
 RM           = rm
 
 # Paths for searching header and source files
-vpath %.c $(SRC_DIR):$(TST_DIR)
+vpath %.c $(SRC_DIR):$(BMPSRC_DIR):$(CLASRC_DIR)
 
 # Object Files
 SRCS        := $(notdir $(wildcard $(SRC_DIR)/*.c))
 OBJS	    := $(addprefix $(OBJ_DIR)/,$(SRCS:.c=.o))
-TSTS_SRCS	:= $(notdir $(wildcard $(TST_DIR)/*.c))
-TSTS_OBJS   := $(addprefix $(OBJ_DIR)/,$(TSTS_SRCS:.c=.o))
-MAIN_SRC    := main.c
-MAIN_OBJ    := $(OBJ_DIR)/main.o
+
+BMP_SRCS	:= $(notdir $(wildcard $(BMPSRC_DIR)/*.c))
+BMP_OBJS    := $(addprefix $(OBJ_DIR)/,$(BMP_SRCS:.c=.o))
+
+CLA_SRCS	:= $(notdir $(wildcard $(CLASRC_DIR)/*.c))
+CLA_OBJS    := $(addprefix $(OBJ_DIR)/,$(CLA_SRCS:.c=.o))
 
 # C/C++ Compiler
 CC           = $(BIN_DIR)/x86_64-linux-gnu-gcc
@@ -29,7 +38,7 @@ RANLIB       = $(BIN_DIR)/x86_64-linux-gnu-ranlib
 
 # C Compiler Flags
 CFLAGS 		= -c -Wall -std=c99
-CINCFLAGS	= -I$(INC_DIR)
+CINCFLAGS	= -I$(INC_DIR) -I$(BMPINC_DIR) -I$(CLAINC_DIR)
 CDEFINES    = 
 
 ifeq ($(CFG),OPTMIZE)
@@ -62,11 +71,11 @@ clean:
 
 #==============================================================================
 
-$(APP): $(MAIN_OBJ) $(TSTS_OBJS) $(OBJS)
+$(APP): $(OBJS) $(BMP_OBJS) $(CLA_OBJS)
 	@echo "Building application $@..."   
-	@$(CC) $(MAIN_OBJ) $(TSTS_OBJS) $(OBJS) -Wl,-Map=$(OUT_DIR)/output.map -o $@
+	@$(CC) $(OBJS) $(BMP_OBJS) $(CLA_OBJS) -Wl,-Map=$(OUT_DIR)/output.map -o $@
 
-$(SHAREDOBJ): $(OBJS)
+$(SHAREDOBJ): $(BMP_OBJS) $(CLA_OBJS)
 	@echo "Building Shared Library $@..."
 	@$(CC) $(OBJS) -o $@
 
@@ -77,7 +86,7 @@ $(OBJ_DIR)/%.o: %.c
 $(APP): | $(OUT_DIR)
 $(SHAREDOBJ): | $(OUT_DIR)
 
-$(OBJS) $(TSTS_OBJS) $(MAIN_OBJ): | $(OBJ_DIR)
+$(OBJS)  $(BMP_OBJS) $(CLA_OBJS): | $(OBJ_DIR)
 
 $(OUT_DIR): $(OBJ_DIR)
 

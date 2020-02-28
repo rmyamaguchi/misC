@@ -7,7 +7,9 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/build",
-                "${workspaceFolder}/inc"
+                "${workspaceFolder}/inc",
+                "${workspaceFolder}/libClass/inc",
+                "${workspaceFolder}/libBMP/inc"
             ],
             "defines": [
                 "_DEBUG_"

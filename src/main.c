@@ -16,16 +16,16 @@
 
 #define NUM_TESTS 3
 
-void (*gv_tests[NUM_TESTS])(void) = {testMap, testShapes, testBmp};
+void (*v_tests[NUM_TESTS])(void) = {test_map, test_shapes, test_bmp};
 
 int main(void)
 {
-    unsigned int opt = 2;
+    unsigned int opt = 1;
 
     if (opt >= NUM_TESTS)
         return 1;
 
-    gv_tests[opt]();
+    v_tests[opt]();
 
     return 0;
 }

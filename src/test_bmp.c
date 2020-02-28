@@ -12,7 +12,7 @@
 #include "util.h"
 #include "bmp.h"
 
-void testBmp()
+void test_bmp()
 {
     FILE *rd_fp, *bmp24_fp;
     byte rd[IMG_MAXBUF] = {};
@@ -28,7 +28,7 @@ void testBmp()
     fclose(rd_fp);
     fclose(bmp24_fp);
 
-    PRINT("%d", BMPto24bpp(rd, wr));
+    PRINT("%d", bmp_to_24bpp(rd, wr));
     memcpy(bmp.data, wr, sizeof(BMPHeader));
 
     ASSERT(memcmp(wr, bmp24, bmp.Header.size));
