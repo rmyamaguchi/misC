@@ -44,13 +44,13 @@
  * @warning This implementation does not work when nesting overloaded macros within 
  * other overloaded macros.
  */
-#define CAT(A, B) A##B
-#define SELECT(NAME, NUM) CAT(NAME, NUM)
+#define CAT(a, b) a##b
+#define SELECT(name, num) CAT(name, num)
 
-#define GET_COUNT(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, COUNT, ...) COUNT
+#define GET_COUNT(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, count, ...) count
 #define VA_SIZE(...) GET_COUNT(__VA_ARGS__, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
-#define VA_SELECT(NAME, ...)           \
-    SELECT(NAME, VA_SIZE(__VA_ARGS__)) \
+#define VA_SELECT(name, ...)           \
+    SELECT(name, VA_SIZE(__VA_ARGS__)) \
     (__VA_ARGS__)
 
 #ifdef EXAMPLE
@@ -65,7 +65,7 @@
  * @note The macro that accepts the maximum number of arguments must always be present.
  */
 #define NONE(...)
-#define GET_MACRO(_1, _2, _3, NAME, ...) NAME
+#define GET_MACRO(_1, _2, _3, name, ...) name
 
 #ifdef EXAMPLE
 #define FOO2(foo, oof) (foo) + (oof)
