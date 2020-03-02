@@ -1,6 +1,8 @@
 
 #include <stdlib.h>
 #include "DigitalStopWatch.h"
+#include "StoppedState.h"
+#include "StartedState.h"
 
 struct DigitalStopWatch
 {
@@ -36,9 +38,11 @@ void stopWatch(DigitalStopWatchPtr instance)
     instance->state.stop(&instance->state);
 }
 
+#ifdef _X
 void X_changeState(DigitalStopWatchPtr instance, WatchStatePtr newState)
 {
     /* Provides a good place for controls and trace messages */
     /* All state transitions have to go through this function */
     instance->state = *newState;
 }
+#endif

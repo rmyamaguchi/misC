@@ -1,5 +1,4 @@
 
-#include "DigitalStopWatch.h"
 #include "StartedState.h"
 
 /* Possible transition to */
@@ -17,6 +16,7 @@ void transitionToStarted(WatchStatePtr state)
     state->stop = stopWatch;
 }
 
+#ifdef _X
 WatchStatePtr X_transitionToStarted(void)
 {
     static struct WatchState startedState;
@@ -30,3 +30,4 @@ WatchStatePtr X_transitionToStarted(void)
     }
     return &startedState;
 }
+#endif

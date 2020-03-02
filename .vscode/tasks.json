@@ -68,6 +68,38 @@
             }
         },
         {
+            "label": "Patterns:DSW:Run",
+            "args": [
+                "dsw"
+            ],
+            "type": "shell",
+            "command": "./build/Build.sh",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            },
+            "windows": {
+                "options": {
+                    "shell": {
+                        "executable": "C://Windows//System32//wsl.exe"
+                    },
+                    "env": {
+                        "WSLENV": "win"
+                    }
+                }
+            }
+        },
+        {
             "label": "Clean",
             "args": [
                 "clean"

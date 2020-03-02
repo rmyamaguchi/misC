@@ -6,6 +6,8 @@
 
 void transitionToStarted(WatchStatePtr state);
 
+#ifdef _X
 WatchStatePtr X_transitionToStarted(void);
+#endif
 
 #endif
