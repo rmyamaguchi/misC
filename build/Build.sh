@@ -2,10 +2,34 @@
 
 clear
 
-export APPNAME="main"
 export BUILD_DIR="./build"
 export OUT_DIR="./out"
 export OBJ_DIR="$OUT_DIR/obj"
+
+case $1 in
+    "bmp")
+        export APPNAME="main_bmp"
+        export APP_DIR="./libBMP" 
+    ;;
+
+    "class")
+        export APPNAME="main_class"
+        export APP_DIR="./libClass"
+    ;;
+
+    "dsw")
+        export APPNAME="main_dsw"
+        export APP_DIR="./libPatterns/DigitalStopWatch"
+    ;;
+
+    "clean")
+        printf "Cleaning... $OUT_DIR\n"
+        make clean -f $BUILD_DIR/Makefile --print-directory
+        printf "done\n"
+        exit
+    ;;
+esac
+
 export APP=$OUT_DIR/$APPNAME
 export SHAREDOBJ=$OUT_DIR/lib$APPNAME.so
 
@@ -17,23 +41,13 @@ if [ ! -d "$OBJ_DIR" ]; then
     mkdir $OUT_DIR/obj
 fi
 
-case $1 in
-    "build")
-        # Compile
-        printf "Compiling $APP...\n"
-        make applic -f $BUILD_DIR/Makefile --print-directory
-        printf "done\n\n"
+# Compile
+printf "Compiling $APP...\n"
+make applic -f $BUILD_DIR/Makefile --print-directory
+printf "done\n\n"
 
-        if [ ! -f "$APP" ]; then
-            exit
-        fi
-        printf "Executing $APP...\n"
-        $APP
-    ;; # end build
-
-    "clean")
-        printf "Cleaning... $OUT_DIR\n"
-        make clean -f $BUILD_DIR/Makefile --print-directory
-        printf "done\n"
-    ;; # end clean
-esac
+if [ ! -f "$APP" ]; then
+    exit
+fi
+printf "Executing $APP...\n"
+$APP

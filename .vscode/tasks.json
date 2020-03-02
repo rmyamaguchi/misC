@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run Build",
+            "label": "BMP:Run",
             "args": [
-                "build"
+                "bmp"
             ],
             "type": "shell",
             "command": "./build/Build.sh",
@@ -36,7 +36,39 @@
             }
         },
         {
-            "label": "Clean Build",
+            "label": "Class:Run",
+            "args": [
+                "class"
+            ],
+            "type": "shell",
+            "command": "./build/Build.sh",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            },
+            "windows": {
+                "options": {
+                    "shell": {
+                        "executable": "C://Windows//System32//wsl.exe"
+                    },
+                    "env": {
+                        "WSLENV": "win"
+                    }
+                }
+            }
+        },
+        {
+            "label": "Clean",
             "args": [
                 "clean"
             ],

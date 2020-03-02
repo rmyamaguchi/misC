@@ -1,15 +1,10 @@
 # Environment
 BIN_DIR     := /usr/bin
-INC_DIR     := ./inc
-SRC_DIR     := ./src
+MAININC_DIR := ./inc
+MAINSRC_DIR := ./src
 
-BMP_DIR     := ./libBMP
-BMPSRC_DIR	:= $(BMP_DIR)/src
-BMPINC_DIR	:= $(BMP_DIR)/inc
-
-CLA_DIR		:= ./libClass
-CLASRC_DIR	:= $(CLA_DIR)/src
-CLAINC_DIR	:= $(CLA_DIR)/inc
+SRC_DIR		:= $(APP_DIR)/src
+INC_DIR		:= $(APP_DIR)/inc
 
 # Commands
 MKDIR        = mkdir
@@ -17,17 +12,13 @@ CP           = cp
 RM           = rm
 
 # Paths for searching header and source files
-vpath %.c $(SRC_DIR):$(BMPSRC_DIR):$(CLASRC_DIR)
+vpath %.c $(MAINSRC_DIR):$(SRC_DIR)
 
 # Object Files
 SRCS        := $(notdir $(wildcard $(SRC_DIR)/*.c))
 OBJS	    := $(addprefix $(OBJ_DIR)/,$(SRCS:.c=.o))
 
-BMP_SRCS	:= $(notdir $(wildcard $(BMPSRC_DIR)/*.c))
-BMP_OBJS    := $(addprefix $(OBJ_DIR)/,$(BMP_SRCS:.c=.o))
-
-CLA_SRCS	:= $(notdir $(wildcard $(CLASRC_DIR)/*.c))
-CLA_OBJS    := $(addprefix $(OBJ_DIR)/,$(CLA_SRCS:.c=.o))
+MAIN_OBJ	:= $(OBJ_DIR)/$(APPNAME).o
 
 # C/C++ Compiler
 CC           = $(BIN_DIR)/gcc
@@ -38,7 +29,7 @@ RANLIB       = $(BIN_DIR)/ranlib
 
 # C Compiler Flags
 CFLAGS 		= -c -Wall -std=c99
-CINCFLAGS	= -I$(INC_DIR) -I$(BMPINC_DIR) -I$(CLAINC_DIR)
+CINCFLAGS	= -I$(MAININC_DIR) -I$(INC_DIR)
 CDEFINES    = 
 
 ifeq ($(CFG),OPTMIZE)
@@ -71,11 +62,11 @@ clean:
 
 #==============================================================================
 
-$(APP): $(OBJS) $(BMP_OBJS) $(CLA_OBJS)
+$(APP): $(MAIN_OBJ) $(OBJS)
 	@echo "Building application $@..."   
-	@$(CC) $(OBJS) $(BMP_OBJS) $(CLA_OBJS) -Wl,-Map=$(OUT_DIR)/output.map -o $@
+	@$(CC) $(MAIN_OBJ) $(OBJS) -Wl,-Map=$(OUT_DIR)/output.map -o $@
 
-$(SHAREDOBJ): $(BMP_OBJS) $(CLA_OBJS)
+$(SHAREDOBJ): $(OBJS)
 	@echo "Building Shared Library $@..."
 	@$(CC) $(OBJS) -o $@
 
@@ -86,7 +77,7 @@ $(OBJ_DIR)/%.o: %.c
 $(APP): | $(OUT_DIR)
 $(SHAREDOBJ): | $(OUT_DIR)
 
-$(OBJS)  $(BMP_OBJS) $(CLA_OBJS): | $(OBJ_DIR)
+$(MAIN_OBJ) $(OBJS): | $(OBJ_DIR)
 
 $(OUT_DIR): $(OBJ_DIR)
 
