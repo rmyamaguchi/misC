@@ -10,7 +10,8 @@
                 "${workspaceFolder}/inc",
                 "${workspaceFolder}/libClass/inc",
                 "${workspaceFolder}/libBMP/inc",
-                "${workspaceFolder}/libPatterns/DigitalStopWatch/inc"
+                "${workspaceFolder}/libPatterns/DigitalStopWatch/inc",
+                "${workspaceFolder}/libPatterns/STRATEGY/inc"
             ],
             "defines": [
                 "_DEBUG_"
