@@ -22,6 +22,11 @@ case $1 in
         export APP_DIR="./libPatterns/DigitalStopWatch"
     ;;
 
+    "llist")
+        export APPNAME="main_llist"
+        export APP_DIR="./libLList"
+    ;;
+
     "clean")
         printf "Cleaning... $OUT_DIR\n"
         make clean -f $BUILD_DIR/Makefile --print-directory

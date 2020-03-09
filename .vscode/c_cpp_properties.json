@@ -13,7 +13,8 @@
                 "${workspaceFolder}/libPatterns/DigitalStopWatch/inc",
                 "${workspaceFolder}/libPatterns/STRATEGY/inc",
                 "${workspaceFolder}/libPatterns/OBSERVER/inc",
-                "${workspaceFolder}/libPatterns/REACTOR/inc"
+                "${workspaceFolder}/libPatterns/REACTOR/inc",
+                "${workspaceFolder}/libLList/inc"
             ],
             "defines": [
                 "_DEBUG_"

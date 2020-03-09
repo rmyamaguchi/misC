@@ -2,37 +2,37 @@
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
     "version": "2.0.0",
+    "type": "shell",
+    "command": "./build/Build.sh",
+    "problemMatcher": {
+        "pattern": {
+            "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "severity": 4,
+            "message": 5
+        }
+    },
+    "windows": {
+        "options": {
+            "shell": {
+                "executable": "C://Windows//System32//wsl.exe"
+            },
+            "env": {
+                "WSLENV": "win"
+            }
+        }
+    },
     "tasks": [
         {
             "label": "BMP:Run",
             "args": [
                 "bmp"
             ],
-            "type": "shell",
-            "command": "./build/Build.sh",
             "group": {
                 "kind": "build",
                 "isDefault": true
-            },
-            "problemMatcher": {
-                "pattern": {
-                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-                    "file": 1,
-                    "line": 2,
-                    "column": 3,
-                    "severity": 4,
-                    "message": 5
-                }
-            },
-            "windows": {
-                "options": {
-                    "shell": {
-                        "executable": "C://Windows//System32//wsl.exe"
-                    },
-                    "env": {
-                        "WSLENV": "win"
-                    }
-                }
             }
         },
         {
@@ -40,31 +40,9 @@
             "args": [
                 "class"
             ],
-            "type": "shell",
-            "command": "./build/Build.sh",
             "group": {
                 "kind": "build",
                 "isDefault": true
-            },
-            "problemMatcher": {
-                "pattern": {
-                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-                    "file": 1,
-                    "line": 2,
-                    "column": 3,
-                    "severity": 4,
-                    "message": 5
-                }
-            },
-            "windows": {
-                "options": {
-                    "shell": {
-                        "executable": "C://Windows//System32//wsl.exe"
-                    },
-                    "env": {
-                        "WSLENV": "win"
-                    }
-                }
             }
         },
         {
@@ -72,31 +50,19 @@
             "args": [
                 "dsw"
             ],
-            "type": "shell",
-            "command": "./build/Build.sh",
             "group": {
                 "kind": "build",
                 "isDefault": true
-            },
-            "problemMatcher": {
-                "pattern": {
-                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-                    "file": 1,
-                    "line": 2,
-                    "column": 3,
-                    "severity": 4,
-                    "message": 5
-                }
-            },
-            "windows": {
-                "options": {
-                    "shell": {
-                        "executable": "C://Windows//System32//wsl.exe"
-                    },
-                    "env": {
-                        "WSLENV": "win"
-                    }
-                }
+            }
+        },
+        {
+            "label": "LList:Run",
+            "args": [
+                "llist"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
             }
         },
         {
@@ -104,31 +70,9 @@
             "args": [
                 "clean"
             ],
-            "command": "./build/Build.sh",
-            "type": "shell",
             "group": {
                 "kind": "build",
                 "isDefault": true
-            },
-            "problemMatcher": {
-                "pattern": {
-                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-                    "file": 1,
-                    "line": 2,
-                    "column": 3,
-                    "severity": 4,
-                    "message": 5
-                }
-            },
-            "windows": {
-                "options": {
-                    "shell": {
-                        "executable": "C://Windows//System32//wsl.exe"
-                    },
-                    "env": {
-                        "WSLENV": "win"
-                    }
-                }
             }
         }
     ]

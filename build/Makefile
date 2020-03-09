@@ -64,7 +64,7 @@ clean:
 
 $(APP): $(MAIN_OBJ) $(OBJS)
 	@echo "Building application $@..."   
-	#@$(CC) $(MAIN_OBJ) $(OBJS) -Wl,-Map=$(OUT_DIR)/output.map -o $@
+#   @$(CC) $(MAIN_OBJ) $(OBJS) -Wl,-Map=$(OUT_DIR)/output.map -o $@
 	@$(CC) $(MAIN_OBJ) $(OBJS) -o $@
 
 $(SHAREDOBJ): $(OBJS)
