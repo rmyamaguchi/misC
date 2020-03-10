@@ -39,6 +39,8 @@ CFLAGS		+= -g -O
 CDEFINES 	+= -D_DEBUG_
 endif
 
+#LIBOBJECTS  := -lm
+
 #==============================================================================
 
 .PHONY: all applic shared_obj clean
@@ -65,7 +67,7 @@ clean:
 $(APP): $(MAIN_OBJ) $(OBJS)
 	@echo "Building application $@..."   
 #   @$(CC) $(MAIN_OBJ) $(OBJS) -Wl,-Map=$(OUT_DIR)/output.map -o $@
-	@$(CC) $(MAIN_OBJ) $(OBJS) -o $@
+	@$(CC) $(MAIN_OBJ) $(OBJS) $(LIBOBJECTS) -o $@
 
 $(SHAREDOBJ): $(OBJS)
 	@echo "Building Shared Library $@..."

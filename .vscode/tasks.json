@@ -66,6 +66,16 @@
             }
         },
         {
+            "label": "Heap:Run",
+            "args": [
+                "heap"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
             "label": "Clean",
             "args": [
                 "clean"

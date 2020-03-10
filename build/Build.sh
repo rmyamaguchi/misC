@@ -27,6 +27,11 @@ case $1 in
         export APP_DIR="./libLList"
     ;;
 
+    "heap")
+        export APPNAME="main_heap"
+        export APP_DIR="./libHeap"
+    ;;
+
     "clean")
         printf "Cleaning... $OUT_DIR\n"
         make clean -f $BUILD_DIR/Makefile --print-directory

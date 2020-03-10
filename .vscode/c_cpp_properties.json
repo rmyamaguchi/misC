@@ -14,7 +14,8 @@
                 "${workspaceFolder}/libPatterns/STRATEGY/inc",
                 "${workspaceFolder}/libPatterns/OBSERVER/inc",
                 "${workspaceFolder}/libPatterns/REACTOR/inc",
-                "${workspaceFolder}/libLList/inc"
+                "${workspaceFolder}/libLList/inc",
+                "${workspaceFolder}/libHeap/inc"
             ],
             "defines": [
                 "_DEBUG_"
