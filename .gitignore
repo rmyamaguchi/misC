@@ -54,3 +54,7 @@ dkms.conf
 
 ## Everything generated
 out
+
+## Etc
+libTests
+src/main_test.c
