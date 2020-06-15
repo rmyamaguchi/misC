@@ -17,8 +17,9 @@ static byte vb_background[] = {0xff, 0xff, 0xff}; /* white */
  * @brief Computes the Lowest Multiple of a Power of 2 Greater than or Equal to (x)
  * 
  * @param[in] p2 Must be a power of 2 
- * @param[in] x 
- * @return unsigned int The result. Returns 0 if p2 is not a power of 2.
+ * @param[in] x
+ * 
+ * @return The result. Returns 0 if p2 is not a power of 2.
  */
 static unsigned int lmp2ge(unsigned int p2, unsigned int x)
 {
@@ -32,7 +33,8 @@ static unsigned int lmp2ge(unsigned int p2, unsigned int x)
  * @brief Computes the number (in bytes) of 0 paddings in a BMP image.
  * 
  * @param[in] img_width in bytes
- * @return unsigned int 
+ * 
+ * @return Number of 0 paddings
  */
 static unsigned int num_pads(size_t img_width)
 {
@@ -49,7 +51,8 @@ static unsigned int num_pads(size_t img_width)
  * @param[in] rd_px Pointer to byte[1] read
  * @param[out] wr_px Pointer to byte[3] written
  * @param[in] color_tab Pointer to the beginning of the color table
- * @return int Number of bytes read = 1
+ * 
+ * @return Number of bytes read = 1
  */
 static int get_px8b(const byte *rd_px, byte *wr_px, const byte *color_tab)
 {
@@ -64,7 +67,8 @@ static int get_px8b(const byte *rd_px, byte *wr_px, const byte *color_tab)
  * @param[in] rd_px Pointer to byte[4] read
  * @param[out] wr_px Pointer to byte[3] written
  * @param[in] color_bg Pointer to a byte[3] as a BGR color of the background
- * @return int Number of bytes read = 4 (BGRA)
+ * 
+ * @return Number of bytes read = 4 (BGRA)
  */
 static int get_px32b(const byte *rd_px, byte *wr_px, const byte *color_bg)
 {
@@ -81,10 +85,9 @@ static int get_px32b(const byte *rd_px, byte *wr_px, const byte *color_bg)
  * @param[in] bmp_in Original BMP buffer
  * @param[out] bmp_out Converted BMP
  * 
- * @return int 
- *  0: Success
- *  1: Invalid BMP
- *  2: Too big of a BMP
+ * @return 0: Success
+ *      \n 1: Invalid BMP
+ *      \n 2: Too big of a BMP
  */
 int bmp_to_24bpp(const byte *bmp_in, byte *bmp_out)
 {

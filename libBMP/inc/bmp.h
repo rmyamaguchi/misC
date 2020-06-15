@@ -56,10 +56,9 @@ typedef union {
  * @param[in] bmp_in Original BMP buffer
  * @param[out] bmp_out Converted BMP
  * 
- * @return int 
- *  0: Success
- *  1: Invalid BMP
- *  2: Too big of a BMP
+ * @return 0: Success
+ *      \n 1: Invalid BMP
+ *      \n 2: Too big of a BMP
  */
 extern int bmp_to_24bpp(const byte *bmp_in, byte *bmp_out);
 
