@@ -35,7 +35,7 @@ CDEFINES    =
 ifeq ($(CFG),OPTMIZE)
 CDEFINES    += -O3
 else
-CFLAGS		+= -g -O
+CFLAGS		+= -g -O -fPIC
 CDEFINES 	+= -D_DEBUG_
 endif
 
@@ -71,7 +71,7 @@ $(APP): $(MAIN_OBJ) $(OBJS)
 
 $(SHAREDOBJ): $(OBJS)
 	@echo "Building Shared Library $@..."
-	@$(CC) $(OBJS) -o $@
+	@$(CC) -shared -o $@ $(OBJS)
 
 $(OBJ_DIR)/%.o: %.c
 	@echo "Compiling $<..."
@@ -82,6 +82,10 @@ $(SHAREDOBJ): | $(OUT_DIR)
 
 $(MAIN_OBJ) $(OBJS): | $(OBJ_DIR)
 
-$(OUT_DIR): $(OBJ_DIR)
+$(OBJ_DIR): | $(OUT_DIR)
+	@$(MKDIR) $@
+
+$(OUT_DIR):
+	@$(MKDIR) $@
 
 # EOF #

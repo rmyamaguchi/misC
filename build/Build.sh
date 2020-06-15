@@ -43,17 +43,14 @@ esac
 export APP=$OUT_DIR/$APPNAME
 export SHAREDOBJ=$OUT_DIR/lib$APPNAME.so
 
-# Create output directory
-if [ ! -d "$OUT_DIR" ]; then
-    mkdir $OUT_DIR
-fi
-if [ ! -d "$OBJ_DIR" ]; then
-    mkdir $OUT_DIR/obj
+COMP="applic"
+if [ "$2" = "share" ]; then
+    COMP="shared_obj"
 fi
 
 # Compile
 printf "Compiling $APP...\n"
-make applic -f $BUILD_DIR/Makefile --print-directory
+make $COMP -f $BUILD_DIR/Makefile --print-directory
 printf "done\n\n"
 
 if [ ! -f "$APP" ]; then
