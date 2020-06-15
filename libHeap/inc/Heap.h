@@ -3,13 +3,6 @@
 
 #include "HeapConf.h"
 
-#define P(i) (i - 1) / 2 // Parent node
-#define L(i) 2 * i + 1   // Left child
-#define R(i) 2 * i + 2   // Right child
-
-#define MIN_ID(arr, i1, i2) arr[i1] > arr[i2] ? i2 : i1
-#define MAX_ID(arr, i1, i2) arr[i1] > arr[i2] ? i1 : i2
-
 typedef struct Heap *HeapPtr;
 
 /**
