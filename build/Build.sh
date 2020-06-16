@@ -32,6 +32,11 @@ case $1 in
         export APP_DIR="./libHeap"
     ;;
 
+    "enum")
+        export APPNAME="main_enum"
+        export APP_DIR="./libEnum"
+    ;;
+
     "clean")
         printf "Cleaning... $OUT_DIR\n"
         make clean -f $BUILD_DIR/Makefile --print-directory

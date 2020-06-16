@@ -76,6 +76,16 @@
             }
         },
         {
+            "label": "Enum:Run",
+            "args": [
+                "enum"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
             "label": "Clean",
             "args": [
                 "clean"

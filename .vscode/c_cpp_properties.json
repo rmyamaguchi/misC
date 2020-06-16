@@ -15,7 +15,8 @@
                 "${workspaceFolder}/libPatterns/OBSERVER/inc",
                 "${workspaceFolder}/libPatterns/REACTOR/inc",
                 "${workspaceFolder}/libLList/inc",
-                "${workspaceFolder}/libHeap/inc"
+                "${workspaceFolder}/libHeap/inc",
+                "${workspaceFolder}/libEnum/inc"
             ],
             "defines": [
                 "_DEBUG_"
