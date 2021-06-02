@@ -7,16 +7,16 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/build",
-                "${workspaceFolder}/inc",
-                "${workspaceFolder}/libClass/inc",
-                "${workspaceFolder}/libBMP/inc",
-                "${workspaceFolder}/libPatterns/DigitalStopWatch/inc",
-                "${workspaceFolder}/libPatterns/STRATEGY/inc",
-                "${workspaceFolder}/libPatterns/OBSERVER/inc",
-                "${workspaceFolder}/libPatterns/REACTOR/inc",
-                "${workspaceFolder}/libLList/inc",
-                "${workspaceFolder}/libHeap/inc",
-                "${workspaceFolder}/libEnum/inc"
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/libClass/include",
+                "${workspaceFolder}/libBMP/include",
+                "${workspaceFolder}/libPatterns/DigitalStopWatch/include",
+                "${workspaceFolder}/libPatterns/STRATEGY/include",
+                "${workspaceFolder}/libPatterns/OBSERVER/include",
+                "${workspaceFolder}/libPatterns/REACTOR/include",
+                "${workspaceFolder}/libLList/include",
+                "${workspaceFolder}/libHeap/include",
+                "${workspaceFolder}/libEnum/include"
             ],
             "defines": [
                 "_DEBUG_"

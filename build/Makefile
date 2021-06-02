@@ -1,10 +1,10 @@
 # Environment
 BIN_DIR     := /usr/bin
-MAININC_DIR := ./inc
+MAININC_DIR := ./include
 MAINSRC_DIR := ./src
 
 SRC_DIR		:= $(APP_DIR)/src
-INC_DIR		:= $(APP_DIR)/inc
+INC_DIR		:= $(APP_DIR)/include
 
 # Commands
 MKDIR        = mkdir
