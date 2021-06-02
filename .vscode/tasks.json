@@ -26,60 +26,8 @@
     },
     "tasks": [
         {
-            "label": "BMP:Run",
-            "args": [
-                "bmp"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Class:Run",
-            "args": [
-                "class"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Patterns:DSW:Run",
-            "args": [
-                "dsw"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "LList:Run",
-            "args": [
-                "llist"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Heap:Run",
-            "args": [
-                "heap"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "Enum:Run",
-            "args": [
-                "enum"
-            ],
+            "label": "Run",
+            "args": ["${input:option}"],
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -87,13 +35,26 @@
         },
         {
             "label": "Clean",
-            "args": [
-                "clean"
-            ],
+            "args": ["clean"],
             "group": {
                 "kind": "build",
                 "isDefault": true
             }
+        }
+    ],
+    "inputs": [
+        {
+            "type": "pickString",
+            "id": "option",
+            "description": "Select project",
+            "options": [
+                "bmp",
+                "class",
+                "enum",
+                "heap",
+                "llist",
+                "dsw"
+            ]
         }
     ]
 }
