@@ -21,16 +21,6 @@
             "defines": [
                 "_DEBUG_"
             ],
-            "intelliSenseMode": "msvc-x64"
-        },
-        {
-            "name": "Linux",
-            "includePath": [
-                "${workspaceFolder}/**"
-            ],
-            "defines": [
-                "_DEBUG_"
-            ],
             "intelliSenseMode": "gcc-x64"
         }
     ],
